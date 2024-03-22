@@ -1,7 +1,6 @@
 import java.util.ArrayList;
-import java.util.UUID;
 
-public class course extends Account{
+public class course extends Account {
     private ArrayList<String> students;
     private String teacher;
     private String courseName;
@@ -16,4 +15,6 @@ public class course extends Account{
     public ArrayList<String> getStudents(){return this.students;}
     public String getTeacher(){return this.teacher;}
     public String getCourseName(){return this.courseName;}
+    public void deletStudent(String userName){this.students.remove(userName);}
+    public void deleteTeacher(String userName){teacher="";}
 }

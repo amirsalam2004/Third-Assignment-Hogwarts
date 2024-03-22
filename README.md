@@ -58,7 +58,7 @@ The assistant serves as an administrative tool, allowing administrators to creat
   2. Utilize the provided tools to create a new assistant account.
 - **Login**: Admins can log in to their assistant accounts using their credentials.
 - **Remove a Teacher/Student**: Assistants possess the authority to remove teachers or students from the platform:
-  1. Navigate to the management section in the dashboard.
+  1. Navigate to the Management section in the dashboard.
   2. Select the option to remove a teacher or student.
   3. Confirm the action to remove the selected user.
 - **View Courses and Their List of Students**: Explore the list of courses available on the platform and view enrolled students for each course.
@@ -79,7 +79,7 @@ Students can perform various actions within the Hogwarts School Management Syste
 
 ### Hogwarts class:
 
-Serving as a central management system for Hogwarts School of Witchcraft and Wizardry, the Hogwarts class facilitates various actions for teachers, students, and administrators.
+Serving as a central Management system for Hogwarts School of Witchcraft and Wizardry, the Hogwarts class facilitates various actions for teachers, students, and administrators.
 
 - Managing lists of teachers, courses, admins, and students from different Houses.
 - Rating teachers and leaving comments for them.
