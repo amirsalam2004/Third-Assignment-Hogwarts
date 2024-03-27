@@ -17,7 +17,6 @@ public class Account implements AccountManagement {
     public Account(){
         this.username="";
     }
-    public ArrayList<String> getUsernames(){return usernames;}
     @Override
     public boolean validatePassword(String enteredPassword) {
         String validPassword;
