@@ -25,6 +25,10 @@ public class Hogwarts extends Management{
                                 students.get(i).garde(course,score);
                         }
         }
+        public void gradeTeacher(String teacherUsername,float score){
+                int index=viewAllTeachers().indexOf(teacherUsername);
+                getTeachers().get(index).addScore(score);
+        }
         public ArrayList<String> getStudentsOfCourse(String courseName){
                 ArrayList<course> courses=new ArrayList<>(getCourses());
                 for(int i=0;i<courses.size();i++)
@@ -43,5 +47,9 @@ public class Hogwarts extends Management{
         public String getDayViaCourseName(String courseName){
                 int index=viewAllCourses().indexOf(courseName);
                 return getCourses().get(index).getCoursDay();
+        }
+        public void setTeacherViaCourseName(String teacher,String courseName){
+                int index=viewAllCourses().indexOf(courseName);
+                getCourses().get(index).setTeacher(teacher);
         }
 }

@@ -4,14 +4,14 @@ public class Teachers extends Account {
     private ArrayList<String> courses;
     private ArrayList<ArrayList<String>> students;
     private ArrayList<String> comments;
-    private int score;
+    private float score;
     private int scoreTimes;
     public Teachers(){
         super();
         this.courses=new ArrayList<>();
         this.students=new ArrayList<>();
         this.comments=new ArrayList<>();
-        score=0;
+        score= 0;
         scoreTimes=0;
     }
     public void addCourses(String course,ArrayList<String> students){
@@ -42,5 +42,9 @@ public class Teachers extends Account {
         int index= courses.indexOf(course);
         return students.get(index);
     }
-    public int getScore(){return score;}
+    public float getScore(){return score;}
+    public void addScore(float score){
+        this.score=(this.score*scoreTimes+score)/(scoreTimes+1);
+        this.scoreTimes++;
+    }
 }

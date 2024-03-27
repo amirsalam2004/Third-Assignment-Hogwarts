@@ -4,22 +4,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Account implements AccountManagement {
-    private static ArrayList<String> usernames;
+    private static ArrayList<String> usernames=new ArrayList<>();
     private String username;
     private String password;
     private UUID accountID;
 
     public Account(String courseType){
-
         this.accountID=UUID.randomUUID();
-        this.usernames=new ArrayList<>();
-        this.username="";
-    }
-    public Account(){
-        this.usernames=new ArrayList<>();
         this.username="";
     }
 
+    public Account(){
+        this.username="";
+    }
+    public ArrayList<String> getUsernames(){return usernames;}
     @Override
     public boolean validatePassword(String enteredPassword) {
         String validPassword;
@@ -40,10 +38,8 @@ public class Account implements AccountManagement {
 
     @Override
     public void setUsername(String newUsername) {
-        if(!usernames.contains(username)) {
-            this.username = newUsername;
-            usernames.add(newUsername);
-        }
+        usernames.add(newUsername);
+        this.username = newUsername;
     }
 
     @Override
@@ -57,7 +53,11 @@ public class Account implements AccountManagement {
         return this.username;
     }
     public void deleteUsername(String username){usernames.remove(username);}
-
+    public boolean similarityUsernames(String username){
+        if(usernames.contains(username))
+            return false;
+        return true;
+    }
     public UUID getUUID(){
         return this.accountID;
     }

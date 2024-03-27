@@ -5,6 +5,7 @@ public class Management extends Account{
     private static ArrayList<Student> students;
     private static ArrayList<Teachers> teachers;
     private static ArrayList<course> courses;
+    private static ArrayList<String> courseDays;
     private static ArrayList<Assistant> assistants;
     String[] days;
     public Management(){
@@ -13,6 +14,7 @@ public class Management extends Account{
         teachers=new ArrayList<>();
         courses=new ArrayList<>();
         assistants=new ArrayList<>();
+        courseDays=new ArrayList<>();
     }
     public ArrayList<String> viewAllTeachers() {
         ArrayList<String> allTeachers=new ArrayList<>();
@@ -46,6 +48,7 @@ public class Management extends Account{
     public ArrayList<Teachers> getTeachers(){return teachers;}
     public ArrayList<course> getCourses(){return courses;}
     public ArrayList<Assistant> getAssistants(){return assistants;}
+    public ArrayList<String> getCourseDays(){return courseDays;}
     public void addStudent(){
         Student newStudent=new Student();
         students.add(newStudent);}

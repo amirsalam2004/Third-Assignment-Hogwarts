@@ -23,7 +23,15 @@ public class Main {
         System.out.println("---------------------------------\n" +
                 "Enter username\n (Each user will be known by the username in the school)\n"+
                 "---------------------------------");
-        user.setUsername(in.nextLine());
+        while (true){
+            String username=in.nextLine();
+            if(user.similarityUsernames(username)) {
+                user.setUsername(username);
+                break;
+            }
+            else
+                System.out.println("Such a user has already been registered!");
+        }
         System.out.println("---------------------------------\n" +
                 "Enter password\n(The password must be at least 8 characters long,\n"
                 + "and you have to use letters and numbers in it,\n"
@@ -47,17 +55,69 @@ public class Main {
                     "  0- EXIT\n"+
                     "  1- View your courses\n" +
                     "  2- View your Teachers\n" +
-                    "  3- register in a course\n" +
+                    "  3- Register in a course\n" +
+                    "  4- View scores\n"+
                     "(ENTER THE OPTION NUMBER)\n" +
                     "---------------------------------");
             String input=in.next();
             if(input.equals("1")){
-                System.out.println(student.getCourses());
+                System.out.println("---------------------------------\nYour courses");
+                for(int i=0;i<student.getCourses().size();i++){
+                    System.out.println(student.getCourses().get(i) +" (teacher: "+
+                            student.getTeachers().get(i)+")(day: "+
+                            student.getCourseDays()+")");
+                }
+                System.out.println("---------------------------------");
             }
-            else if(input.equals("2"))
-                System.out.println(student.getTeachers());
+            else if(input.equals("2")) {
+                System.out.println("---------------------------------\n" +
+                        "Your teachers : \n" + student.getTeachers() +
+                        "\nENTER THE NAME OF A TEACHER TO RATE\n" +
+                        "ENTER 0 TO RETURN\n" +
+                        "---------------------------------");
+                while (true){
+                    String input1=in.nextLine();
+                    if(student.getTeachers().contains(input1)){
+                        System.out.println("---------------------------------\n" +
+                                "teacher : \n" + input1 +
+                                "\nENTER THE SCORE(0-10)\n" +
+                                "---------------------------------");
+                        while (true){
+                            try {
+                                String input2 = in.next();
+                                in.nextLine();
+                                float score=Integer.parseInt(input2);
+                                if(score>=0 && score<=10){
+                                    hogwarts.gradeTeacher(input1,score);
+                                    System.out.println("MISSION ACCOMPLISHED");
+                                    break;
+                                }
+                                if(score<0 || score>10)
+                                    System.out.println("INPUT IS INCORRECT!");
+                            }
+                            catch (Exception e){
+                                System.out.println("INPUT IS INCORRECT!");
+                            }
+                        }
+                        System.out.println("---------------------------------\n" +
+                                "teacher : \n" + input1 +
+                                "\nENTER YOUR COMMENT TO SEND TO THE TEACHER(IN ONE LINE)\n" +
+                                "ENTER 0 TO RETURN\n"+
+                                "---------------------------------");
+                        String comment=in.nextLine();
+                        if(!comment.equals("0"))
+                            hogwarts.addCommentFromStudent(comment,input1,student.getUsername());
+                        System.out.println("MISSION ACCOMPLISHED");
+                        break;
+                    }
+                    else if(input1.equals("0"))
+                        break;
+                    else
+                        System.out.println("INPUT IS INCORRECT!");
+                }
+            }
             else if(input.equals("3")){
-                ArrayList<String> allowedCourses=new ArrayList<String>(student.getAllowedCourse(courses));
+                ArrayList<String> allowedCourses=new ArrayList<String>(student.getAllowedCourse(courses,hogwarts.getCourseDays()));
                 while (true) {
                     System.out.println("---------------------------------\n" +
                             "Allowed courses for yor:\n   0- EXIT");
@@ -81,6 +141,13 @@ public class Main {
                     }
                 }
             }
+            else if(input.equals("4")){
+                System.out.println("---------------------------------\nYour scores\n");
+                for(int i=0;i<student.getCourses().size();i++){
+                    System.out.println(" ("+student.getCourses().get(i)+") score: " +
+                            student.getScores().get(i));
+                }
+            }
             else if(input.equals("0"))
                 break;
             else
@@ -94,8 +161,9 @@ public class Main {
                     "Choose your option:\n" +
                     "  0- EXIT\n" +
                     "  1- View your courses\n" +
-                    "  2- register in a course\n" +
+                    "  2- Register in a course\n" +
                     "  3- View your score\n" +
+                    "  4- View comments sent for you\n"+
                     "(ENTER THE OPTION NUMBER)\n" +
                     "---------------------------------");
             String input = in.next();
@@ -155,15 +223,17 @@ public class Main {
             }
             else if(input.equals("2")){
                 while (true) {
+                    ArrayList<String> allowedCourses=teacher.getAllowedCourses(courses);
                     System.out.println("---------------------------------\n" +
                             "Allowed courses:\n" +
-                            teacher.getAllowedCourses(courses) +
+                            allowedCourses +
                             "\n(ENTER THE COURSE NAME TO REGISTER)\n"
                             +"(ENTER 0 TO RETURN)"
                             +"\n---------------------------------");
                     String input1=in.nextLine();
-                    if(teacher.getAllowedCourses(courses).contains(input1)){
+                    if(allowedCourses.contains(input1)){
                         teacher.addCourses(input1,hogwarts.getStudentsOfCourse(input1));
+                        hogwarts.setTeacherViaCourseName(teacher.getUsername(),input1);
                         System.out.println("MISSION ACCOMPLISHED");
                         break;
                     }
@@ -172,6 +242,16 @@ public class Main {
                     else
                         System.out.println("INPUT IS INCORRECT!");
                 }
+            }
+            else if(input.equals("3"))
+                System.out.println("---------------------------------\n" +
+                        " Your score : " +teacher.getScore()+
+                        "\n---------------------------------");
+            else if(input.equals("4")){
+                System.out.println("---------------------------------\nYour comments :\n");
+                for(int i=0;i<teacher.getComments().size();i++)
+                    System.out.println(" "+teacher.getComments().get(i));
+                System.out.println("---------------------------------");
             }
             else if(input.equals("0"))
                 break;
@@ -316,6 +396,7 @@ public class Main {
                     in.nextLine();
                     String[]  days= new String[]{"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
                     if(Arrays.stream(days).toList().contains(input)) {
+                        assistant.getCourseDays().add(input);
                         assistant.getCourses().getLast().setCourseDay(input);
                         break;
                     }

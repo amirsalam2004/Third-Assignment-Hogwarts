@@ -12,10 +12,10 @@ public class Student extends Account {
         scores=new ArrayList<>();
         courseDays=new ArrayList<>();
     }
-    public ArrayList<String> getAllowedCourse(ArrayList<String> courses){
+    public ArrayList<String> getAllowedCourse(ArrayList<String> courses,ArrayList<String> courseDys){
         ArrayList<String> allowedCoursesList=new ArrayList<String>();
         for (int i=0;i<courses.size();i++){
-            if(!this.courses.contains(courses.get(i)))
+            if(!this.courses.contains(courses.get(i)) && !this.courseDays.contains(courseDys.get(i)))
                 allowedCoursesList.add(courses.get(i));
         }
         return allowedCoursesList;
