@@ -1,11 +1,18 @@
 import java.util.ArrayList;
 
 public class Teachers extends Account {
-    ArrayList<String> courses;
-    ArrayList<ArrayList<String>> students;
+    private ArrayList<String> courses;
+    private ArrayList<ArrayList<String>> students;
+    private ArrayList<String> comments;
+    private int score;
+    private int scoreTimes;
     public Teachers(){
+        super();
         this.courses=new ArrayList<>();
         this.students=new ArrayList<>();
+        this.comments=new ArrayList<>();
+        score=0;
+        scoreTimes=0;
     }
     public void addCourses(String course,ArrayList<String> students){
         this.courses.add(course);
@@ -26,9 +33,14 @@ public class Teachers extends Account {
                 students.get(i).remove(index);
             }
     }
+    public void addComment(String comment,String userName){
+        comments.add(userName+" : "+comment);
+    }
+    public ArrayList<String> getComments(){return comments;}
     public ArrayList<String> getCourses(){return courses;}
     public ArrayList<String> getStudents(String course){
         int index= courses.indexOf(course);
         return students.get(index);
     }
+    public int getScore(){return score;}
 }

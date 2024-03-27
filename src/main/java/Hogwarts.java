@@ -1,17 +1,47 @@
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class Hogwarts extends Management{
-
-        // TODO: Define Functionalities
-        public void viewAllTeachers() {
-            //TODO
+        public boolean addCommentFromStudent(String comment,String teacherUser,String studentUser){
+                ArrayList<Teachers> teachers=getTeachers();
+                for(int i=0;i<teachers.size();i++)
+                        if(teachers.get(i).getUsername().equals(teacherUser)) {
+                                teachers.get(i).addComment(comment,studentUser);
+                                return true;
+                        }
+                return false;
         }
-
-        public void viewAllStudents() {
-            //TODO
+        public course getCourseViaUUID(UUID uuid){
+                ArrayList<course> courses=new ArrayList<>(getCourses());
+                for(int i=0;i<courses.size();i++)
+                        if(courses.get(i).getUUID().equals(uuid))
+                                return courses.get(i);
+                return null;
         }
-
-        public void viewAllCourses() {
-            //TODO
+        public void gradeStudent(String studentUser,int score,String course){
+                ArrayList<Student> students=getStudents();
+                for(int i=0;i<students.size();i++)
+                        if(students.get(i).getUsername().equals(studentUser)) {
+                                students.get(i).garde(course,score);
+                        }
+        }
+        public ArrayList<String> getStudentsOfCourse(String courseName){
+                ArrayList<course> courses=new ArrayList<>(getCourses());
+                for(int i=0;i<courses.size();i++)
+                        if(courses.get(i).getCourseName().equals(courseName))
+                                return courses.get(i).getStudents();
+                return null;
+        }
+        public void addAssistant(){
+                Assistant newAssistant=new Assistant();
+                getAssistants().add(newAssistant);
+        }
+        public String getTeacherViaCourseName(String courseName){
+                int index=viewAllCourses().indexOf(courseName);
+                return getCourses().get(index).getTeacher();
+        }
+        public String getDayViaCourseName(String courseName){
+                int index=viewAllCourses().indexOf(courseName);
+                return getCourses().get(index).getCoursDay();
         }
 }
